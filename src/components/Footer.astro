@@ -83,11 +83,17 @@ const seoLinks = [
                 stroke-width="2"
                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
             </svg>
-            <span
-              >{siteConfig.address.street}, {siteConfig.address.city}, {
-                siteConfig.address.province
-              }</span
+            <a
+              href={siteConfig.googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-blue-400 transition-colors"
+              title="Lihat alamat di Google Maps"
             >
+              {siteConfig.address.street}, {siteConfig.address.city}, {
+                siteConfig.address.province
+              }
+            </a>
           </p>
           <p class="flex items-center gap-2.5">
             <img
