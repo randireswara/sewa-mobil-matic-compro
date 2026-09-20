@@ -1,0 +1,73 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { siteConfig } from '../config/site';
+
+const breadcrumbs = [
+  { name: 'Tentang Kami', href: '/tentang-kami/' }
+];
+---
+
+<PageLayout
+  title="Tentang Kami | Sewa Mobil Matic BSD & Jabodetabek"
+  description="Profil Sewa Mobil Matic, penyedia jasa rental kendaraan bertransmisi otomatis terpercaya di area BSD City, Tangerang Selatan, Alam Sutera, dan Jakarta."
+  h1="Tentang Sewa Mobil Matic"
+  intro="Mitra terpercaya transportasi modern bertransmisi otomatis untuk kebutuhan perorangan, keluarga, dan operasional bisnis perusahaan."
+  breadcrumbs={breadcrumbs}
+>
+  <div class="space-y-16 max-w-4xl mx-auto">
+    
+    <!-- Profile & History -->
+    <div class="bg-slate-900 rounded-3xl p-8 border border-slate-800 space-y-6">
+      <h2 class="text-2xl font-extrabold text-white">Profil &amp; Komitmen Bisnis Kami</h2>
+      <p class="text-slate-300 leading-relaxed">
+        <strong class="text-white">Sewa Mobil Matic</strong> adalah penyedia jasa rental kendaraan yang berfokus penuh pada penyediaan armada bertransmisi otomatis (Matic / CVT) di kawasan BSD City, Tangerang Selatan, Alam Sutera, dan seluruh wilayah Jakarta.
+      </p>
+      <p class="text-slate-300 leading-relaxed">
+        Kami memahami bahwa mobilitas di wilayah perkotaan Jabodetabek memerlukan kenyamanan ekstra. Penggunaan kendaraan matic yang prima membantu pengemudi terhindar dari kelelahan saat menghadapi situasi kemacetan lalu lintas.
+      </p>
+      <p class="text-slate-300 leading-relaxed">
+        Dengan mengedepankan prinsip transparansi biaya, kebersihan armada, dan keramahan layanan, kami terus menjadi pilihan utama bagi penyewa perorangan maupun korporasi yang membutuhkan mobil sewaan harian dan bulanan.
+      </p>
+    </div>
+
+    <!-- Core Values -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+        <div class="w-12 h-12 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-white">Kondisi Armada Terjamin</h3>
+        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+          Seluruh unit menjalani pengecekan 15 titik keselamatan sebelum diserahkan kepada pelanggan.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+        <div class="w-12 h-12 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-white">Proses Cepat via WA</h3>
+        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+          Reservasi dan verifikasi identitas berjalan cepat tanpa kerumitan administrasi yang panjang.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+        <div class="w-12 h-12 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-white">Harga Transparan</h3>
+        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+          Bebas dari biaya tersembunyi. Rincian tarif dijelaskan sejak awal konfirmasi pemesanan.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</PageLayout>

@@ -1,0 +1,95 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import CTASection from "../components/CTASection.astro";
+import type { Crumb } from "../components/Breadcrumb.astro";
+import type { FAQItemSchema } from "../components/SchemaOrg.astro";
+
+export interface Props {
+  title: string;
+  description: string;
+  h1: string;
+  intro?: string;
+  breadcrumbs: Crumb[];
+  faqs?: FAQItemSchema[];
+  waMessage?: string;
+  bgImage?: string;
+}
+
+const {
+  title,
+  description,
+  h1,
+  intro,
+  breadcrumbs,
+  faqs = [],
+  waMessage,
+  bgImage = "/images/jakarta-cars-hero.jpg",
+} = Astro.props;
+
+const schemaCrumbs = breadcrumbs.map((c) => ({
+  name: c.name,
+  item: c.href,
+}));
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  breadcrumbs={schemaCrumbs}
+  faqs={faqs}
+>
+  <!-- Visual Breadcrumb -->
+  <Breadcrumb items={breadcrumbs} />
+
+  <!-- Page Header Hero with Realistic Jakarta Cars Background -->
+  <section
+    class="relative bg-slate-450 text-white overflow-hidden py-14 sm:py-20 border-b border-slate-800"
+  >
+    <!-- Background Jakarta Fleet Cars Image with Cinematic Dark Overlays -->
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      <img
+        src={bgImage}
+        alt="Armada Mobil sewamobilmatic.id Jakarta"
+        class="w-full h-full object-cover object-[center_45%] opacity-45 sm:opacity-95 scale-105"
+        loading="eager"
+        decoding="async"
+      />
+      <!-- Top, bottom, and center gradient overlays for maximum text clarity -->
+      <div class="absolute inset-0"></div>
+      <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-950/70 via-slate-950/50 to-slate-950/85"
+      >
+      </div>
+      <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-600/15 via-transparent to-transparent"
+      >
+      </div>
+    </div>
+
+    <div
+      class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4 relative z-10 drop-shadow-md"
+    >
+      <h1
+        class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight"
+      >
+        {h1}
+      </h1>
+      {
+        intro && (
+          <p class="text-base sm:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            {intro}
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- Page Main Content Slot -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <slot />
+  </div>
+
+  <!-- Bottom CTA -->
+  <CTASection waMessage={waMessage} />
+</BaseLayout>

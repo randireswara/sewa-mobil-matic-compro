@@ -1,0 +1,50 @@
+---
+import type { FAQItem } from '../data/faqs';
+
+export interface Props {
+  faqs: FAQItem[];
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  faqs,
+  title = 'Pertanyaan yang Sering Diajukan (FAQ)',
+  subtitle = 'Jawaban seputar layanan sewa mobil matic harian, bulanan, syarat dokumen, dan proses pengantaran.',
+} = Astro.props;
+---
+
+<section class="py-16 bg-slate-950 text-white border-t border-slate-800">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+        {title}
+      </h2>
+      {subtitle && (
+        <p class="text-sm sm:text-base text-slate-400 mt-3 leading-relaxed">
+          {subtitle}
+        </p>
+      )}
+    </div>
+
+    <div class="space-y-4">
+      {faqs.map((item, idx) => (
+        <details class="group bg-slate-900 rounded-2xl border border-slate-800 p-5 cursor-pointer transition-all duration-200 open:border-blue-500/40 open:bg-slate-900/90">
+          <summary class="flex items-center justify-between gap-4 font-bold text-base sm:text-lg text-slate-100 group-hover:text-blue-400 list-none select-none">
+            <span>{item.question}</span>
+            <span class="w-8 h-8 rounded-full bg-slate-800 group-open:bg-blue-600 text-slate-300 group-open:text-white flex items-center justify-center shrink-0 transition-transform group-open:rotate-180">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-800/80 text-sm sm:text-base text-slate-300 leading-relaxed space-y-2">
+            <p>{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+
+  </div>
+</section>

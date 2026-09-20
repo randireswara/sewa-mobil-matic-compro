@@ -1,0 +1,162 @@
+---
+import { siteConfig } from '../config/site';
+
+export interface BreadcrumbItem {
+  name: string;
+  item: string;
+}
+
+export interface FAQItemSchema {
+  question: string;
+  answer: string;
+}
+
+export interface Props {
+  type?: 'website' | 'article' | 'business' | 'page';
+  title?: string;
+  description?: string;
+  url?: string;
+  image?: string;
+  publishedDate?: string;
+  modifiedDate?: string;
+  authorName?: string;
+  breadcrumbs?: BreadcrumbItem[];
+  faqs?: FAQItemSchema[];
+}
+
+const {
+  type = 'website',
+  title = siteConfig.defaultSeo.title,
+  description = siteConfig.defaultSeo.description,
+  url = Astro.url.href,
+  image = new URL(siteConfig.defaultOgImage, Astro.site || siteConfig.url).href,
+  publishedDate,
+  modifiedDate,
+  authorName = siteConfig.name,
+  breadcrumbs = [],
+  faqs = [],
+} = Astro.props;
+
+// WebSite Schema
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteConfig.url}/#website`,
+  url: siteConfig.url,
+  name: siteConfig.name,
+  description: siteConfig.description,
+  inLanguage: 'id-ID',
+};
+
+// AutoRental Business Schema
+const businessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AutoRental',
+  '@id': `${siteConfig.url}/#organization`,
+  name: siteConfig.name,
+  url: siteConfig.url,
+  logo: new URL('/favicon.svg', siteConfig.url).href,
+  image: image,
+  description: siteConfig.description,
+  telephone: siteConfig.phoneDisplay,
+  email: siteConfig.email,
+  priceRange: 'Rp 350.000 - Rp 12.500.000',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: siteConfig.address.street,
+    addressLocality: siteConfig.address.city,
+    addressRegion: siteConfig.address.province,
+    postalCode: siteConfig.address.postalCode,
+    addressCountry: siteConfig.address.country,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: -6.3015,
+    longitude: 106.6534, // BSD City coordinates
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: '07:00',
+      closes: '22:00',
+    },
+  ],
+  areaServed: [
+    { '@type': 'AdministrativeArea', name: 'BSD City' },
+    { '@type': 'AdministrativeArea', name: 'Tangerang Selatan' },
+    { '@type': 'AdministrativeArea', name: 'Alam Sutera' },
+    { '@type': 'AdministrativeArea', name: 'Jakarta' },
+  ],
+};
+
+// Article Schema
+let articleSchema = null;
+if (type === 'article') {
+  articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: title,
+    description: description,
+    image: [image],
+    datePublished: publishedDate,
+    dateModified: modifiedDate || publishedDate,
+    author: {
+      '@type': 'Organization',
+      name: authorName,
+      url: siteConfig.url,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: siteConfig.name,
+      logo: {
+        '@type': 'ImageObject',
+        url: new URL('/favicon.svg', siteConfig.url).href,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url,
+    },
+  };
+}
+
+// Breadcrumb Schema
+let breadcrumbSchema = null;
+if (breadcrumbs && breadcrumbs.length > 0) {
+  breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbs.map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.name,
+      item: crumb.item.startsWith('http') ? crumb.item : new URL(crumb.item, siteConfig.url).href,
+    })),
+  };
+}
+
+// FAQ Schema
+let faqSchema = null;
+if (faqs && faqs.length > 0) {
+  faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+}
+---
+
+<!-- JSON-LD Structured Data Injection -->
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(businessSchema)} />
+{articleSchema && <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />}
+{breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
+{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}

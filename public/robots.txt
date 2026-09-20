@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Host
+Host: https://sewamobilmatic.id
+
+# Sitemaps
+Sitemap: https://sewamobilmatic.id/sitemap-index.xml

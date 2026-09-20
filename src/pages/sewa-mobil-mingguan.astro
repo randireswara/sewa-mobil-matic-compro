@@ -1,0 +1,77 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import RentalPriceTable from "../components/RentalPriceTable.astro";
+import OtherRentalLinks from "../components/OtherRentalLinks.astro";
+import { WEEKLY_RENTAL_DATA } from "../data/rentalPricing";
+
+const breadcrumbs = [
+  { name: "Sewa Mobil", href: "/sewa-mobil-mingguan/" },
+  { name: "Sewa Mobil Mingguan", href: "/sewa-mobil-mingguan/" },
+];
+
+const faqs = [
+  {
+    question: "Mengapa memilih paket sewa mobil mingguan di sewamobilmatic.id?",
+    answer:
+      "Paket sewa mobil mingguan (durasi 7 hari) memberikan diskon tarif per hari yang jauh lebih ekonomis dibandingkan akumulasi sewa harian biasa, cocok untuk perjalanan dinas atau liburan.",
+  },
+  {
+    question: "Berapa harga sewa mobil mingguan termurah di sewamobilmatic.id?",
+    answer:
+      "Harga sewa mingguan kami mulai dari Rp 2.100.000 per minggu untuk unit Toyota Agya A/T dan Rp 2.300.000 per minggu untuk Grand Avanza Facelift.",
+  },
+  {
+    question:
+      "Apakah unit mobil mingguan bisa diantar langsung ke rumah atau kantor?",
+    answer:
+      "Ya, kami melayani pengantaran unit langsung ke alamat customer dengan biaya antar/ambil yang disesuaikan dengan biaya GrabCar PP dari pool ke lokasi Anda.",
+  },
+];
+---
+
+<PageLayout
+  title="Harga Sewa Mobil Mingguan - sewamobilmatic.id"
+  description="Pricelist sewa mobil mingguan hemat sewamobilmatic.id. Tersedia unit City Car, MPV, SUV, Luxury mulai Rp 2.100.000/minggu. Syarat mudah & unit prima."
+  h1="Harga Sewa Mobil Mingguan - sewamobilmatic.id"
+  intro="Solusi sewa mobil mingguan (durasi 7 hari) hemat dan efisien dari sewamobilmatic.id. Dapatkan diskon tarif lebih hemat dibanding sewa harian untuk menunjang agenda kerja, liburan keluarga, maupun operasional mobilitas Anda."
+  breadcrumbs={breadcrumbs}
+  faqs={faqs}
+>
+  <div class="max-w-5xl mx-auto space-y-12">
+    <!-- Highlights Badges -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+        <span class="block text-xl font-extrabold text-blue-400">7 Hari</span>
+        <span class="text-xs text-slate-400 mt-0.5">Durasi Penuh</span>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+        <span class="block text-xl font-extrabold text-emerald-400"
+          >Rp 2.1 Jt</span
+        >
+        <span class="text-xs text-slate-400 mt-0.5">Mulai / Minggu</span>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+        <span class="block text-xl font-extrabold text-blue-400">Diskon</span>
+        <span class="text-xs text-slate-400 mt-0.5">Lebih Hemat</span>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+        <span class="block text-xl font-extrabold text-emerald-400"
+          >Siap Jalan</span
+        >
+        <span class="text-xs text-slate-400 mt-0.5"
+          >Unit Bersih &amp; Prima</span
+        >
+      </div>
+    </div>
+
+    <!-- Responsive 2-Column Table & Notes -->
+    <RentalPriceTable
+      title="Tabel Tarif Sewa Mobil Mingguan"
+      durationLabel="Mingguan"
+      items={WEEKLY_RENTAL_DATA}
+    />
+
+    <!-- SEO Internal Linking Section -->
+    <OtherRentalLinks currentType="mingguan" />
+  </div>
+</PageLayout>

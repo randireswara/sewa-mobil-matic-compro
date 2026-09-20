@@ -1,0 +1,225 @@
+---
+import { siteConfig, getWhatsAppUrl } from "../config/site";
+
+const currentYear = new Date().getFullYear();
+
+const mainLinks = [
+  { name: "Beranda", href: "/" },
+  { name: "Tentang Kami", href: "/tentang-kami/" },
+  { name: "Layanan Rental", href: "/layanan/" },
+  { name: "Daftar Armada", href: "/armada/" },
+  { name: "Daftar Harga", href: "/harga/" },
+  { name: "Area Layanan", href: "/area-layanan/" },
+  { name: "Artikel & News", href: "/artikel/" },
+  { name: "Hubungi Kami", href: "/kontak/" },
+];
+
+const seoLinks = [
+  { name: "Sewa Mobil BSD", href: "/sewa-mobil-bsd/" },
+  { name: "Sewa Mobil Bulanan BSD", href: "/sewa-mobil-bulanan-bsd/" },
+  {
+    name: "Sewa Mobil Bulanan Terdekat",
+    href: "/sewa-mobil-bulanan-terdekat/",
+  },
+  {
+    name: "Harga Sewa Mobil Bulanan Tangsel",
+    href: "/harga-sewa-mobil-bulanan-tangerang-selatan/",
+  },
+  {
+    name: "Harga Sewa Mobil Bulanan BSD",
+    href: "/harga-sewa-mobil-bulanan-bsd/",
+  },
+  { name: "Sewa Mobil Bulanan Jakarta", href: "/sewa-mobil-bulanan-jakarta/" },
+  {
+    name: "Sewa Mobil Bulanan Alam Sutera",
+    href: "/sewa-mobil-bulanan-alam-sutera/",
+  },
+  { name: "Sewa Mobil Matic Bulanan", href: "/sewa-mobil-matic-bulanan/" },
+];
+---
+
+<footer
+  class="bg-slate-950 text-slate-300 border-t border-slate-800 pt-16 pb-12"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
+      <!-- Brand & Info -->
+      <div class="space-y-4">
+        <a
+          href="/"
+          class="inline-block group"
+          aria-label="Sewa Mobil Matic Beranda"
+        >
+          <img
+            src="/images/logo-white.png"
+            alt="SewaMobilMatic.id"
+            width="160"
+            height="53"
+            class="h-10 w-auto object-contain transition-transform group-hover:scale-105"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+        <p class="text-sm text-slate-400 leading-relaxed">
+          {siteConfig.description}
+        </p>
+        <div class="pt-2 text-sm text-slate-400 space-y-2">
+          <p class="flex items-start gap-2.5">
+            <svg
+              class="w-5 h-5 text-blue-500 shrink-0 mt-0.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            <span
+              >{siteConfig.address.street}, {siteConfig.address.city}, {
+                siteConfig.address.province
+              }</span
+            >
+          </p>
+          <p class="flex items-center gap-2.5">
+            <img
+              src="/images/whatsapp.webp"
+              alt="WhatsApp"
+              class="w-5 h-5 object-contain shrink-0"
+              width="20"
+              height="20"
+            />
+            <a
+              href={getWhatsAppUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-whatsapp font-semibold transition-colors"
+            >
+              {siteConfig.phoneDisplay}
+            </a>
+          </p>
+          <p class="flex items-center gap-2.5">
+            <svg
+              class="w-5 h-5 text-blue-500 shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              ></path>
+            </svg>
+            <a
+              href={`mailto:${siteConfig.email}`}
+              class="hover:text-blue-400 transition-colors"
+            >
+              {siteConfig.email}
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Nav -->
+      <div>
+        <h3
+          class="text-white font-bold text-base mb-4 tracking-wide uppercase text-xs"
+        >
+          Navigasi Utama
+        </h3>
+        <ul class="space-y-2.5 text-sm">
+          {
+            mainLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="hover:text-blue-400 transition-colors inline-block py-0.5"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- SEO Landing Pages -->
+      <div>
+        <h3
+          class="text-white font-bold text-base mb-4 tracking-wide uppercase text-xs"
+        >
+          Layanan Lokasi (SEO)
+        </h3>
+        <ul class="space-y-2.5 text-sm">
+          {
+            seoLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="hover:text-blue-400 transition-colors inline-block py-0.5"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Hours & RSS -->
+      <div class="space-y-4">
+        <h3
+          class="text-white font-bold text-base mb-4 tracking-wide uppercase text-xs"
+        >
+          Jam Operasional
+        </h3>
+        <p class="text-sm text-slate-400">
+          Senin - Minggu: <span class="text-white font-semibold"
+            >07:00 - 22:00 WIB</span
+          ><br />
+          Pemesanan WhatsApp: <span class="text-emerald-400 font-semibold"
+            >24 Jam Fast Response</span
+          >
+        </p>
+
+        <div class="pt-4 border-t border-slate-800">
+          <h4 class="text-xs font-bold text-slate-400 uppercase mb-2">
+            RSS Feed &amp; Sitemap
+          </h4>
+          <div class="flex items-center gap-3 text-sm">
+            <a href="/sitemap-index.xml" class="text-blue-400 hover:underline"
+              >Sitemap XML</a
+            >
+            <span class="text-slate-700">•</span>
+            <a href="/rss.xml" class="text-blue-400 hover:underline">RSS Feed</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div
+      class="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500"
+    >
+      <p>
+        &copy; {currentYear}
+        {siteConfig.name} ({siteConfig.domain}). All rights reserved.
+      </p>
+      <p>
+        Layanan Rental Mobil Matic Harian &amp; Bulanan Area BSD City, Tangsel,
+        Alam Sutera &amp; Jakarta.
+      </p>
+    </div>
+  </div>
+</footer>

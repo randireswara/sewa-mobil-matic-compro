@@ -1,0 +1,77 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import RentalPriceTable from "../components/RentalPriceTable.astro";
+import OtherRentalLinks from "../components/OtherRentalLinks.astro";
+import { MONTHLY_RENTAL_DATA } from "../data/rentalPricing";
+
+const breadcrumbs = [
+  { name: "Sewa Mobil", href: "/sewa-mobil-bulanan/" },
+  { name: "Sewa Mobil Bulanan", href: "/sewa-mobil-bulanan/" },
+];
+
+const faqs = [
+  {
+    question: "Apa saja keuntungan sewa mobil bulanan di sewamobilmatic.id?",
+    answer:
+      "Sewa mobil bulanan memberikan penghematan biaya signifikan hingga 50% dibanding sewa harian akumulatif. Selain itu, Anda bebas biaya perawatan rutin berkala dan ganti oli.",
+  },
+  {
+    question: "Berapa tarif sewa mobil bulanan di sewamobilmatic.id?",
+    answer:
+      "Tarif sewa mobil bulanan kami mulai dari Rp 5.500.000 per bulan untuk City Car seperti Toyota Agya A/T, dan Rp 6.500.000 per bulan untuk Grand Avanza Facelift.",
+  },
+  {
+    question:
+      "Apakah melayani sewa mobil bulanan untuk operasional perusahaan (corporate)?",
+    answer:
+      "Ya, kami melayani sewa bulanan perusahaan dengan kelengkapan invoice resmi, kontrak berkala fleksibel, dan fasilitas unit pengganti jika ada servis besar.",
+  },
+];
+---
+
+<PageLayout
+  title="Harga Sewa Mobil Bulanan - sewamobilmatic.id"
+  description="Paket sewa mobil bulanan sewamobilmatic.id untuk perorangan & perusahaan mulai Rp 5.500.000/bulan. Bebas biaya service rutin, unit terawat & pengganti."
+  h1="Harga Sewa Mobil Bulanan - sewamobilmatic.id"
+  intro="Pricelist sewa mobil bulanan paling ekonomis untuk kebutuhan personal dan operasional perusahaan dari sewamobilmatic.id. Nikmati kebebasan berkendara setiap hari tanpa repot memikirkan beban perawatan rutin dan servis kendaraan."
+  breadcrumbs={breadcrumbs}
+  faqs={faqs}
+>
+  <div class="max-w-5xl mx-auto space-y-12">
+    <!-- Highlights Badges -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+        <span class="block text-xl font-extrabold text-blue-400">Bulanan</span>
+        <span class="text-xs text-slate-400 mt-0.5">30 Hari Penuh</span>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+        <span class="block text-xl font-extrabold text-emerald-400"
+          >Rp 5.5 Jt</span
+        >
+        <span class="text-xs text-slate-400 mt-0.5">Mulai / Bulan</span>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+        <span class="block text-xl font-extrabold text-blue-400"
+          >Free Servis</span
+        >
+        <span class="text-xs text-slate-400 mt-0.5">&amp; Ganti Oli</span>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+        <span class="block text-xl font-extrabold text-emerald-400"
+          >Personal/PT</span
+        >
+        <span class="text-xs text-slate-400 mt-0.5">Invoice Resmi</span>
+      </div>
+    </div>
+
+    <!-- Responsive 2-Column Table & Notes -->
+    <RentalPriceTable
+      title="Tabel Tarif Sewa Mobil Bulanan"
+      durationLabel="Bulanan"
+      items={MONTHLY_RENTAL_DATA}
+    />
+
+    <!-- SEO Internal Linking Section -->
+    <OtherRentalLinks currentType="bulanan" />
+  </div>
+</PageLayout>

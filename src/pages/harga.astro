@@ -1,0 +1,100 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { FLEET_DATA, formatRupiah } from '../data/fleet';
+
+const breadcrumbs = [
+  { name: 'Harga', href: '/harga/' }
+];
+---
+
+<PageLayout
+  title="Daftar Harga Sewa Mobil Bulanan & Harian BSD | Sewa Mobil Matic"
+  description="Transparansi pricelist harga sewa mobil matic harian & bulanan di BSD City, Tangerang Selatan, Alam Sutera, & Jakarta. Mulai dari Rp 350rb/hari."
+  h1="Daftar Harga Sewa Mobil Matic"
+  intro="Dapatkan transparansi tarif sewa kendaraan matic tanpa biaya tersembunyi. Dapatkan diskon khusus untuk kontrak penyewaan bulanan."
+  breadcrumbs={breadcrumbs}
+>
+  <div class="space-y-12 max-w-5xl mx-auto">
+    
+    <!-- Pricing Table -->
+    <div class="bg-slate-900 rounded-3xl border border-slate-800 overflow-hidden shadow-2xl">
+      <div class="p-6 bg-slate-950 border-b border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-extrabold text-white">Tabel Estimasi Tarif Sewa Mobil Matic</h2>
+          <p class="text-xs text-slate-400 mt-1">Area BSD City, Tangerang Selatan, Alam Sutera, &amp; Jakarta</p>
+        </div>
+        <span class="px-3 py-1 rounded-full bg-blue-600/20 text-blue-400 text-xs font-bold border border-blue-500/30">
+          Transmisi Full Automatic / CVT
+        </span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm text-slate-300">
+          <thead class="bg-slate-950/80 text-xs uppercase font-extrabold text-slate-400 border-b border-slate-800">
+            <tr>
+              <th scope="col" class="px-6 py-4">Tipe Armada</th>
+              <th scope="col" class="px-6 py-4">Transmisi</th>
+              <th scope="col" class="px-6 py-4">Kapasitas</th>
+              <th scope="col" class="px-6 py-4">Tarif Harian</th>
+              <th scope="col" class="px-6 py-4 text-emerald-400">Tarif Bulanan (Hemat)</th>
+              <th scope="col" class="px-6 py-4 text-right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800">
+            {FLEET_DATA.map((v) => (
+              <tr class="hover:bg-slate-800/50 transition-colors">
+                <th scope="row" class="px-6 py-4 font-bold text-white whitespace-nowrap">
+                  {v.name}
+                </th>
+                <td class="px-6 py-4">
+                  <span class="px-2.5 py-1 rounded-lg bg-blue-600/20 text-blue-400 text-xs font-semibold">
+                    {v.transmission}
+                  </span>
+                </td>
+                <td class="px-6 py-4">{v.seats} Seats</td>
+                <td class="px-6 py-4 font-semibold text-slate-200">{formatRupiah(v.dailyPrice)}</td>
+                <td class="px-6 py-4 font-bold text-emerald-400">{formatRupiah(v.monthlyPrice)}</td>
+                <td class="px-6 py-4 text-right">
+                  <WhatsAppButton
+                    message={`Halo Sewa Mobil Matic, saya menanyakan penawaran harga untuk ${v.name}.`}
+                    label="Tanya WA"
+                    class="py-1.5 px-3 text-xs"
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Related SEO Pricing Links -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <a
+        href="/harga-sewa-mobil-bulanan-bsd/"
+        class="p-6 rounded-2xl bg-slate-900 border border-slate-800 hover:border-blue-500/50 transition-all space-y-2 group"
+      >
+        <h3 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">
+          Rincian Harga Sewa Mobil Bulanan BSD &rarr;
+        </h3>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Simulasi dan penjelasan lengkap penawaran harga sewa bulanan khusus area BSD City.
+        </p>
+      </a>
+
+      <a
+        href="/harga-sewa-mobil-bulanan-tangerang-selatan/"
+        class="p-6 rounded-2xl bg-slate-900 border border-slate-800 hover:border-blue-500/50 transition-all space-y-2 group"
+      >
+        <h3 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">
+          Rincian Harga Bulanan Tangerang Selatan &rarr;
+        </h3>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Daftar paket sewa bulanan terjangkau untuk wilayah Bintaro, Serpong, Ciputat, & Tangsel.
+        </p>
+      </a>
+    </div>
+
+  </div>
+</PageLayout>

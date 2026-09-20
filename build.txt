@@ -1,0 +1,51 @@
+22:24:00 [vite] Re-optimizing dependencies because vite config has changed
+22:24:00 [types] Generated 446ms
+22:24:00 [build] output: "static"
+22:24:00 [build] directory: D:\sewamobilmatic\dist\
+22:24:00 [build] Collecting build info...
+22:24:00 [build] ✓ Completed in 501ms.
+22:24:00 [build] Building static entrypoints...
+22:24:02 [vite] [32m✓ built in 2.02s[39m
+22:24:02 [build] ✓ Completed in 2.06s.
+
+ generating static routes 
+22:24:02 ▶ src/pages/404.astro
+22:24:02   └─ /404.html (+11ms)
+22:24:02 ▶ src/pages/[slug].astro
+22:24:02   ├─ /sewa-mobil-bsd/index.html (+10ms)
+22:24:02   ├─ /sewa-mobil-bulanan-bsd/index.html (+5ms)
+22:24:02   ├─ /sewa-mobil-bulanan-terdekat/index.html (+5ms)
+22:24:02   ├─ /harga-sewa-mobil-bulanan-tangerang-selatan/index.html (+5ms)
+22:24:02   ├─ /harga-sewa-mobil-bulanan-bsd/index.html (+6ms)
+22:24:02   ├─ /sewa-mobil-bulanan-jakarta/index.html (+5ms)
+22:24:02   ├─ /sewa-mobil-bulanan-alam-sutera/index.html (+5ms)
+22:24:02   └─ /sewa-mobil-matic-bulanan/index.html (+8ms)
+22:24:02 ▶ src/pages/area-layanan.astro
+22:24:02   └─ /area-layanan/index.html (+3ms)
+22:24:02 ▶ src/pages/armada.astro
+22:24:02   └─ /armada/index.html (+6ms)
+22:24:02 ▶ src/pages/artikel/[slug].astro
+22:24:02   ├─ /artikel/keuntungan-sewa-mobil-matic-untuk-operasional-perusahaan/index.html (+7ms)
+22:24:02   ├─ /artikel/panduan-sewa-mobil-bsd-bebas-potongan-tersembunyi/index.html (+5ms)
+22:24:02   └─ /artikel/tips-memilih-sewa-mobil-bulanan/index.html (+5ms)
+22:24:02 ▶ src/pages/artikel/index.astro
+22:24:02   └─ /artikel/index.html (+3ms)
+22:24:02 ▶ src/pages/harga.astro
+22:24:02   └─ /harga/index.html (+3ms)
+22:24:02 ▶ src/pages/index.astro
+22:24:02   └─ /index.html (+4ms)
+22:24:02 ▶ src/pages/kontak.astro
+22:24:02   └─ /kontak/index.html (+4ms)
+22:24:02 ▶ src/pages/layanan.astro
+22:24:02   └─ /layanan/index.html (+2ms)
+22:24:02 λ src/pages/rss.xml.ts
+22:24:02   └─ /rss.xml (+12ms)
+22:24:03 ▶ src/pages/tentang-kami.astro
+22:24:03   └─ /tentang-kami/index.html (+3ms)
+22:24:03 ✓ Completed in 283ms.
+
+
+✓ Sitemap generated with 18 canonical URLs at sitemap-index.xml & sitemap.xml
+
+22:24:03 [build] 20 page(s) built in 2.88s
+22:24:03 [build] Complete!

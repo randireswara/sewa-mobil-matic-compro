@@ -1,0 +1,72 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import RentalPriceTable from "../components/RentalPriceTable.astro";
+import OtherRentalLinks from "../components/OtherRentalLinks.astro";
+import { DAILY_RENTAL_DATA } from "../data/rentalPricing";
+
+const breadcrumbs = [
+  { name: "Sewa Mobil", href: "/sewa-mobil-harian/" },
+  { name: "Sewa Mobil Harian", href: "/sewa-mobil-harian/" },
+];
+
+const faqs = [
+  {
+    question: "Berapa tarif sewa mobil harian termurah di sewamobilmatic.id?",
+    answer:
+      "Tarif sewa mobil harian di sewamobilmatic.id mulai dari Rp 400.000 per 24 jam untuk tipe City Car seperti Toyota Agya A/T dan Grand Avanza Facelift.",
+  },
+  {
+    question: "Apakah sistem sewa harian terhitung per 24 jam?",
+    answer:
+      "Ya, sistem 24 jam perhari/pertanggal terhitung mulai pukul 00.00 sampai jam 24.00 sesuai kesepakatan serah terima unit.",
+  },
+  {
+    question: "Bagaimana cara memesan unit mobil harian di sewamobilmatic.id?",
+    answer:
+      "Cukup konfirmasi 1 hari sebelumnya melalui WhatsApp Admin, isi formulir sewa, serta kirimkan foto identitas (KTP, KK, SIM A). Serah terima unit dilakukan beserta checklist COD.",
+  },
+];
+---
+
+<PageLayout
+  title="Harga Sewa Mobil Harian - sewamobilmatic.id"
+  description="Daftar harga sewa mobil harian lepas kunci & dengan driver di sewamobilmatic.id. Pilihan armada Agya, Avanza, Innova, Fortuner, Alphard mulai Rp 400.000/24 jam."
+  h1="Harga Sewa Mobil Harian - sewamobilmatic.id"
+  intro="Dapatkan transparansi pricelist sewa mobil harian bertransmisi otomatis terlengkap dari sewamobilmatic.id. Seluruh armada dalam kondisi prima, wangi, terawat rutin, dan siap diantar langsung ke lokasi Anda."
+  breadcrumbs={breadcrumbs}
+  faqs={faqs}
+>
+  <div class="max-w-5xl mx-auto space-y-12">
+    <!-- Highlights Badges -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+        <span class="block text-xl font-extrabold text-blue-400">22+</span>
+        <span class="text-xs text-slate-400 mt-0.5">Pilihan Armada</span>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+        <span class="block text-xl font-extrabold text-emerald-400"
+          >Rp 400rb</span
+        >
+        <span class="text-xs text-slate-400 mt-0.5">Mulai / 24 Jam</span>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+        <span class="block text-xl font-extrabold text-blue-400">100%</span>
+        <span class="text-xs text-slate-400 mt-0.5">Matic Terawat</span>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+        <span class="block text-xl font-extrabold text-emerald-400">COD</span>
+        <span class="text-xs text-slate-400 mt-0.5">Saat Serah Terima</span>
+      </div>
+    </div>
+
+    <!-- Responsive 2-Column Table & Notes -->
+    <RentalPriceTable
+      title="Tabel Tarif Sewa Mobil Harian"
+      durationLabel="Harian"
+      items={DAILY_RENTAL_DATA}
+    />
+
+    <!-- SEO Internal Linking Section -->
+    <OtherRentalLinks currentType="harian" />
+  </div>
+</PageLayout>

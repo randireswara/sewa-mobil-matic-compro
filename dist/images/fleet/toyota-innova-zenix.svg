@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <rect width="600" height="400" fill="#0F172A"/>
+  <rect x="20" y="20" width="560" height="360" rx="16" fill="#1E293B" stroke="#334155" stroke-width="2"/>
+  <path d="M90 255C90 205 130 150 190 140L280 125C345 112 430 115 480 140L530 168C550 182 555 205 555 255V270H90V255Z" fill="#1D4ED8"/>
+  <circle cx="180" cy="270" r="36" fill="#0F172A" stroke="#E2E8F0" stroke-width="7"/>
+  <circle cx="455" cy="270" r="36" fill="#0F172A" stroke="#E2E8F0" stroke-width="7"/>
+  <text x="300" y="345" text-anchor="middle" fill="#F8FAFC" font-family="system-ui" font-size="22" font-weight="700">TOYOTA INNOVA ZENIX G CVT</text>
+  <text x="300" y="370" text-anchor="middle" fill="#60A5FA" font-family="system-ui" font-size="14" font-weight="600">Medium Premium MPV • 7 Seats</text>
+</svg>

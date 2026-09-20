@@ -1,0 +1,415 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import VehicleCard from "../components/VehicleCard.astro";
+import FAQSection from "../components/FAQSection.astro";
+import CTASection from "../components/CTASection.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import CarSearchForm from "../components/CarSearchForm.astro";
+import { FLEET_DATA } from "../data/fleet";
+import { MAIN_FAQS } from "../data/faqs";
+import { siteConfig } from "../config/site";
+
+const servicesList = [
+  {
+    title: "Sewa Mobil Harian",
+    desc: "Layanan sewa mobil matic per 24 jam untuk keperluan dinas singkat, acara keluarga, atau wisata di area BSD & Jabodetabek.",
+    href: "/layanan/",
+    icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z",
+  },
+  {
+    title: "Sewa Mobil Bulanan",
+    desc: "Paket sewa hemat durasi bulanan dengan diskon hingga 50%. Bebas biaya perawatan, ganti oli rutin, dan pajak kendaraan.",
+    href: "/sewa-mobil-bulanan-bsd/",
+    icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+  },
+  {
+    title: "Sewa Mobil Matic",
+    desc: "Armada 100% bertransmisi otomatis / CVT modern. Mengemudi lebih nyaman dan rileks tanpa pegal di tengah kemacetan.",
+    href: "/sewa-mobil-matic-bulanan/",
+    icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+  },
+  {
+    title: "Sewa Mobil Perusahaan",
+    desc: "Layanan armada operasional untuk kebutuhan corporate/bisnis dengan sistem billing bulanan dan legalitas invoice lengkap.",
+    href: "/layanan/",
+    icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4",
+  },
+  {
+    title: "Sewa Mobil Lepas Kunci",
+    desc: "Fasilitas sewa tanpa driver bagi pelanggan yang memenuhi kelengkapan verifikasi identitas dan dokumen persyaratan.",
+    href: "/tentang-kami/",
+    icon: "M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 0121 9z",
+  },
+];
+
+const areaSEO = [
+  {
+    name: "BSD City",
+    href: "/sewa-mobil-bsd/",
+    desc: "Pengantaran gratis ke GOP, AEON, Vanya Park, & NavaPark",
+  },
+  {
+    name: "Alam Sutera",
+    href: "/sewa-mobil-alam-sutera/",
+    desc: "Silkwood, Synergy Building, Living World, & kluster perumahan",
+  },
+  {
+    name: "Serpong",
+    href: "/sewa-mobil-serpong/",
+    desc: "Gading Serpong, Summarecon, WTC, & stasiun Serpong",
+  },
+  {
+    name: "Bintaro",
+    href: "/sewa-mobil-bintaro/",
+    desc: "Bintaro Sektor 1-9, Bintaro Xchange, & Discovery",
+  },
+  {
+    name: "Jakarta Selatan",
+    href: "/sewa-mobil-jakarta-selatan/",
+    desc: "Pondok Indah, Cilandak, TB Simatupang, & Senopati",
+  },
+  {
+    name: "Jakarta Barat",
+    href: "/sewa-mobil-jakarta-barat/",
+    desc: "Puri Indah, Kebon Jeruk, Kembangan, & akses Bandara Soetta",
+  },
+];
+
+const benefits = [
+  {
+    title: "Armada Terawat & Bersih",
+    desc: "Setiap unit rutin menjalani servis berkala di bengkel resmi serta pembersihan interior sebelum diserahkan.",
+  },
+  {
+    title: "Proses Booking Mudah",
+    desc: "Cukup pilih unit dan konfirmasi lewat WhatsApp. Persyaratan verifikasi dokumen praktis dan cepat.",
+  },
+  {
+    title: "Pilihan Durasi Fleksibel",
+    desc: "Tersedia skema harian maupun bulanan yang disesuaikan secara tepat dengan agenda perjalanan Anda.",
+  },
+  {
+    title: "Cocok untuk Pribadi & Kantor",
+    desc: "Melayani sewa perorangan, kebutuhan mobil dinas kantor, maupun keperluan acara operasional.",
+  },
+  {
+    title: "CS Response via WhatsApp",
+    desc: "Tim layanan pelanggan siap memberikan informasi transparan dan membantu kebutuhan Anda.",
+  },
+];
+
+const mainFaqsForSchema = MAIN_FAQS.map((f) => ({
+  question: f.question,
+  answer: f.answer,
+}));
+---
+
+<BaseLayout faqs={mainFaqsForSchema}>
+  <!-- Hero Section -->
+  <section
+    class="relative bg-slate-950 text-white overflow-hidden py-16 sm:py-24 border-b border-slate-800"
+  >
+    <!-- Background Car Image with Cinematic Overlay -->
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      <img
+        src="/images/hero-cars-bg.jpg"
+        alt="Armada Mobil Matic Rental BSD"
+        class="w-full h-full object-cover object-[center_35%] opacity-75 sm:opacity-85"
+        loading="eager"
+        decoding="async"
+      />
+      <!-- Gradient overlay for text contrast on the left, keeping cars visible on center and right -->
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/65 to-slate-950/30 lg:to-transparent"
+      >
+      </div>
+      <!-- Bottom fade into the next section -->
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent"
+      >
+      </div>
+      <!-- Top fade for navbar contrast -->
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-transparent to-transparent"
+      >
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <div
+            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-600/20 border border-blue-500/40 text-blue-300 text-xs sm:text-sm font-bold"
+          >
+            <span class="w-2 h-2 rounded-full bg-blue-400 animate-ping"></span>
+            Rental Mobil Matic Terpercaya BSD &amp; Tangsel
+          </div>
+
+          <h1
+            class="text-3xl sm:text-5xl xl:text-6xl font-extrabold tracking-tight leading-tight text-white"
+          >
+            Sewa Mobil Matic untuk Kebutuhan <span class="text-blue-500"
+              >Harian &amp; Bulanan</span
+            >
+          </h1>
+
+          <p
+            class="text-base sm:text-xl text-slate-300 max-w-2xl leading-relaxed"
+          >
+            Solusi rental kendaraan bertransmisi otomatis terawat dengan proses
+            cepat, transparan, dan pengantaran unit langsung ke kawasan BSD
+            City, Tangerang Selatan, Alam Sutera, dan Jakarta.
+          </p>
+
+          <div
+            class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
+          >
+            <WhatsAppButton
+              message="Halo Sewa Mobil Matic, saya ingin menanyakan informasi dan reservasi sewa mobil."
+              label="Hubungi via WhatsApp"
+              class="w-full sm:w-auto text-base sm:text-lg"
+            />
+            <a
+              href="#armada"
+              class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-base border border-slate-700 transition-colors"
+            >
+              <span>Lihat Armada</span>
+              <svg
+                class="w-5 h-5 text-blue-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </a>
+          </div>
+
+          <!-- Trust Indicators -->
+          <div
+            class="pt-8 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4 text-left"
+          >
+            <div class="flex items-center gap-3">
+              <div
+                class="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center shrink-0"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <span class="text-xs font-semibold text-slate-300"
+                >Armada Terawat</span
+              >
+            </div>
+            <div class="flex items-center gap-3">
+              <div
+                class="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center shrink-0"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <span class="text-xs font-semibold text-slate-300"
+                >Booking Mudah</span
+              >
+            </div>
+            <div class="flex items-center gap-3">
+              <div
+                class="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center shrink-0"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  ></path>
+                </svg>
+              </div>
+              <span class="text-xs font-semibold text-slate-300"
+                >Harian &amp; Bulanan</span
+              >
+            </div>
+            <div class="flex items-center gap-3">
+              <div
+                class="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center shrink-0"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  ></path>
+                </svg>
+              </div>
+              <span class="text-xs font-semibold text-slate-300"
+                >Area BSD &amp; Sekitar</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Car Search Form -->
+        <div class="lg:col-span-5">
+          <CarSearchForm />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Armada -->
+  <section
+    id="armada"
+    class="py-16 bg-slate-900 text-white border-b border-slate-800"
+  >
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div class="text-center max-w-2xl mx-auto space-y-3">
+        <span class="text-xs font-bold text-blue-400 uppercase tracking-wider"
+          >Unit Pilihan</span
+        >
+        <h2
+          class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight"
+        >
+          Daftar Armada Mobil Matic Prima
+        </h2>
+        <p class="text-sm sm:text-base text-slate-400">
+          Seluruh unit bertransmisi otomatis (matic/CVT) dengan jaminan
+          kebersihan dan kondisi mesin terawat presisi.
+        </p>
+      </div>
+
+      <!-- Dynamic Search Result Banner -->
+      <div
+        id="armada-search-banner"
+        class="hidden transition-all duration-300 max-w-4xl mx-auto"
+      >
+        <div id="armada-search-details"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {FLEET_DATA.map((v) => <VehicleCard vehicle={v} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Area Layanan (SEO Links) -->
+  <section class="py-16 bg-slate-950 text-white border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div class="text-center max-w-2xl mx-auto space-y-3">
+        <span class="text-xs font-bold text-blue-400 uppercase tracking-wider"
+          >Cakupan Wilayah</span
+        >
+        <h2
+          class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight"
+        >
+          Area Utama Pelayanan Sewa Mobil
+        </h2>
+        <p class="text-sm sm:text-base text-slate-400">
+          Temukan halaman informasi sewa mobil khusus sesuai lokasi domisili
+          atau tempat kegiatan Anda.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {
+          areaSEO.map((area) => (
+            <a
+              href={area.href}
+              class="group p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-blue-500/50 transition-all duration-200 hover:-translate-y-1 shadow-lg"
+            >
+              <h3 class="font-extrabold text-base text-white group-hover:text-blue-400 transition-colors flex items-center justify-between">
+                <span>{area.name}</span>
+                <svg
+                  class="w-4 h-4 text-blue-400 transform group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+              </h3>
+              <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                {area.desc}
+              </p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Mengapa Memilih Kami -->
+  <section class="py-16 bg-slate-900 text-white border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div class="text-center max-w-2xl mx-auto space-y-3">
+        <h2
+          class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight"
+        >
+          Mengapa Memilih Sewa Mobil Matic?
+        </h2>
+        <p class="text-sm sm:text-base text-slate-400">
+          Komitmen kami adalah menghadirkan pengalaman rental kendaraan yang
+          nyaman, aman, dan tanpa rasa khawatir.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {
+          benefits.map((b, idx) => (
+            <div class="p-6 rounded-2xl bg-slate-950 border border-slate-800 space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 font-extrabold text-lg flex items-center justify-center">
+                0{idx + 1}
+              </div>
+              <h3 class="text-lg font-bold text-white">{b.title}</h3>
+              <p class="text-sm text-slate-400 leading-relaxed">{b.desc}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <FAQSection faqs={MAIN_FAQS} />
+
+  <!-- CTA Section -->
+  <CTASection />
+</BaseLayout>

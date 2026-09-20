@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => data.draft !== true);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+// Get related articles in the same category or overall
+const allPosts = await getCollection('blog', ({ data }) => data.draft !== true && data.title !== post.data.title);
+const relatedArticles = allPosts.slice(0, 3);
+---
+
+<ArticleLayout article={post} relatedArticles={relatedArticles}>
+  <Content />
+</ArticleLayout>

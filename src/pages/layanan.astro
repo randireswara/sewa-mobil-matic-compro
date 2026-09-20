@@ -1,0 +1,95 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+
+const breadcrumbs = [
+  { name: 'Layanan', href: '/layanan/' }
+];
+
+const detailedServices = [
+  {
+    title: 'Sewa Mobil Harian Matic',
+    subtitle: 'Fleksibilitas 24 Jam untuk Kebutuhan Perjalanan Singkat',
+    desc: 'Layanan sewa mobil harian bertransmisi matic untuk mendukung agenda perjalanan bisnis, acara keluarga, liburan akhir pekan, maupun acara pernikahan di Jabodetabek.',
+    features: ['Tarif transparan per 24 jam', 'Layanan pengantaran unit ke lokasi', 'Kondisi interior bersih & harum', 'Pilihan City Car & MPV 7-Seater'],
+    seoLink: '/sewa-mobil-bsd/',
+    seoText: 'Sewa Mobil BSD'
+  },
+  {
+    title: 'Sewa Mobil Bulanan Matic',
+    subtitle: 'Hemat Biaya Hingga 50% untuk Penggunaan Jangka Panjang',
+    desc: 'Solusi paling ekonomis bagi Anda yang membutuhkan kendaraan untuk durasi satu bulan atau lebih. Bebas biaya service berkala, ganti oli, dan perpanjangan STNK.',
+    features: ['Gratis perawatan & penggantian oli', 'Jaminan unit pengganti (replacement car)', 'Diskon khusus kontrak durasi panjang', 'Cocok untuk tempat tinggal / dinas'],
+    seoLink: '/sewa-mobil-bulanan-bsd/',
+    seoText: 'Sewa Mobil Bulanan BSD'
+  },
+  {
+    title: 'Sewa Mobil Operasional Perusahaan',
+    subtitle: 'Dukungan Armada Kantor dengan Skema Billing Resmi',
+    desc: 'Layanan penyediaan kendaraan operasional perusahaan (corporate car rental). Mendukung produktivitas tim kerja dan mobilitas jajaran manajemen.',
+    features: ['Invoice tagihan & kontrak legalitas', 'Fleksibilitas penambahan unit armada', 'Layanan maintenance terorganisir', 'Pilihan unit MPV & Premium Zenix'],
+    seoLink: '/sewa-mobil-matic-bulanan/',
+    seoText: 'Sewa Mobil Matic Bulanan'
+  },
+  {
+    title: 'Sewa Mobil Lepas Kunci',
+    subtitle: 'Kebebasan Berkendara Mandiri Bersama Keluarga',
+    desc: 'Fasilitas sewa tanpa driver untuk kenyamanan privasi perjalanan Anda. Tersedia setelah verifikasi data dan identitas penyewa terkonfirmasi.',
+    features: ['Privasi penuh dalam perjalanan', 'Unit matic bertenaga & irit BBM', 'Dukungan bantuan darurat jalan raya', 'Syarat verifikasi KTP/SIM yang aman'],
+    seoLink: '/sewa-mobil-bulanan-terdekat/',
+    seoText: 'Sewa Mobil Bulanan Terdekat'
+  }
+];
+---
+
+<PageLayout
+  title="Layanan Rental Mobil Matic Harian & Bulanan | Sewa Mobil Matic"
+  description="Layanan lengkap rental mobil matic di BSD City, Tangsel & Jakarta. Tersedia sewa harian, sewa bulanan hemat, sewa perusahaan, dan lepas kunci."
+  h1="Layanan Rental Mobil Matic"
+  intro="Pilih skema penyewaan kendaraan yang paling tepat untuk mendukung kelancaran aktivitas harian maupun operasional jangka panjang Anda."
+  breadcrumbs={breadcrumbs}
+>
+  <div class="space-y-12 max-w-5xl mx-auto">
+    
+    {detailedServices.map((service, index) => (
+      <div class="bg-slate-900 rounded-3xl p-8 border border-slate-800 hover:border-blue-500/40 transition-colors shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <div class="lg:col-span-8 space-y-4">
+          <span class="px-3 py-1 rounded-full bg-blue-600/20 text-blue-400 text-xs font-bold border border-blue-500/30">
+            Layanan 0{index + 1}
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">{service.title}</h2>
+          <p class="text-sm font-semibold text-blue-400">{service.subtitle}</p>
+          <p class="text-sm sm:text-base text-slate-300 leading-relaxed">{service.desc}</p>
+          
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm text-slate-300 pt-2">
+            {service.features.map(f => (
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>{f}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="lg:col-span-4 flex flex-col items-stretch gap-3">
+          <WhatsAppButton
+            message={`Halo Sewa Mobil Matic, saya berminat menanyakan ${service.title}.`}
+            label="Pesan Layanan Ini"
+            class="w-full text-center"
+          />
+          <a
+            href={service.seoLink}
+            class="text-center py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 transition-colors"
+          >
+            Halaman {service.seoText}
+          </a>
+        </div>
+
+      </div>
+    ))}
+
+  </div>
+</PageLayout>

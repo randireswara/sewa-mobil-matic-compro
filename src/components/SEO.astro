@@ -1,0 +1,118 @@
+---
+import { siteConfig } from '../config/site';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = siteConfig.defaultSeo.title,
+  description = siteConfig.defaultSeo.description,
+  canonical,
+  image = siteConfig.defaultOgImage,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  author = siteConfig.name,
+  noindex = false,
+} = Astro.props;
+
+// Always use production domain for canonical
+const canonicalUrl =
+  canonical || new URL(Astro.url.pathname, siteConfig.url).href;
+
+// Ensure full image URL for Open Graph
+const imageUrl = image.startsWith('http')
+  ? image
+  : new URL(image, siteConfig.url).href;
+
+const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION;
+const gaId = import.meta.env.PUBLIC_GA_ID;
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+
+<link rel="canonical" href={canonicalUrl} />
+
+<meta
+  name="robots"
+  content={
+    noindex
+      ? 'noindex, nofollow'
+      : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  }
+/>
+
+<!-- Open Graph -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:site_name" content={siteConfig.name} />
+<meta property="og:locale" content="id_ID" />
+
+{publishedTime && (
+  <meta property="article:published_time" content={publishedTime} />
+)}
+
+{modifiedTime && (
+  <meta property="article:modified_time" content={modifiedTime} />
+)}
+
+{author && <meta property="article:author" content={author} />}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalUrl} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={title} />
+
+<!-- Google Search Console Verification -->
+{gscVerification && (
+  <meta
+    name="google-site-verification"
+    content={gscVerification}
+  />
+)}
+
+<!-- Google Analytics -->
+{gaId && (
+  <>
+    <script
+      async
+      src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+    ></script>
+
+    <script is:inline define:vars={{ gaId }}>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
+      gtag('js', new Date());
+      gtag('config', gaId);
+    </script>
+  </>
+)}

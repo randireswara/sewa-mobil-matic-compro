@@ -1,0 +1,35 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import VehicleCard from '../components/VehicleCard.astro';
+import { FLEET_DATA } from '../data/fleet';
+
+const breadcrumbs = [
+  { name: 'Armada', href: '/armada/' }
+];
+---
+
+<PageLayout
+  title="Daftar Armada Mobil Matic Rental BSD | Sewa Mobil Matic"
+  description="Pilihan lengkap armada sewa mobil matic (Honda Brio, Toyota Avanza, Xpander, Raize, Zenix). Transmisi otomatis terawat, siap diantar ke lokasi Anda."
+  h1="Daftar Armada Mobil Matic"
+  intro="Seluruh armada kami 100% bertransmisi otomatis / CVT modern, terawat secara berkala di bengkel resmi, dan dipastikan bersih sebelum pengantaran."
+  breadcrumbs={breadcrumbs}
+>
+  <div class="space-y-12">
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {FLEET_DATA.map((vehicle) => (
+        <VehicleCard vehicle={vehicle} />
+      ))}
+    </div>
+
+    <!-- Info Note -->
+    <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 text-center max-w-3xl mx-auto space-y-2">
+      <h3 class="text-lg font-bold text-white">Butuh Tipe Kendaraan Lain?</h3>
+      <p class="text-sm text-slate-300">
+        Jika Anda memerlukan unit tipe khusus yang tidak terdaftar di atas, silakan hubungi tim CS kami via WhatsApp untuk mengecek ketersediaan unit terbaru.
+      </p>
+    </div>
+
+  </div>
+</PageLayout>

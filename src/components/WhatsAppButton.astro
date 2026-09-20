@@ -1,0 +1,66 @@
+---
+import { getWhatsAppUrl } from '../config/site';
+
+export interface Props {
+  message?: string;
+  label?: string;
+  variant?: 'primary' | 'secondary' | 'floating' | 'inline';
+  class?: string;
+}
+
+const {
+  message = 'Halo Sewa Mobil Matic, saya berminat menanyakan sewa mobil.',
+  label = 'Hubungi via WhatsApp',
+  variant = 'primary',
+  class: className = '',
+} = Astro.props;
+
+const url = getWhatsAppUrl(message);
+---
+
+{variant === 'floating' ? (
+  <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end group">
+    <span class="mb-2 px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-semibold shadow-xl border border-slate-700 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+      Tanya CS via WhatsApp
+    </span>
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 transform hover:scale-110 active:scale-95 transition-all duration-200 focus:outline-none drop-shadow-[0_10px_20px_rgba(37,211,102,0.45)]"
+      aria-label="Tanya Sewa Mobil via WhatsApp"
+    >
+      <img
+        src="/images/whatsapp.webp"
+        alt="WhatsApp"
+        class="w-full h-full object-contain filter drop-shadow-md"
+        width="64"
+        height="64"
+        loading="eager"
+        decoding="async"
+      />
+    </a>
+  </div>
+) : (
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    class={`inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0 ${
+      variant === 'secondary'
+        ? 'bg-slate-800 hover:bg-slate-700 text-white border border-slate-700'
+        : 'bg-whatsapp hover:bg-whatsapp-hover text-slate-950 font-extrabold shadow-emerald-500/20'
+    } ${className}`}
+  >
+    <img
+      src="/images/whatsapp.webp"
+      alt="WhatsApp"
+      class="w-5 h-5 object-contain shrink-0"
+      width="20"
+      height="20"
+      loading="eager"
+      decoding="async"
+    />
+    <span>{label}</span>
+  </a>
+)}

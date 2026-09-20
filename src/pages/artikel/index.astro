@@ -1,0 +1,88 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+
+const allArticles = await getCollection('blog', ({ data }) => {
+  return data.draft !== true;
+});
+
+// Sort by publishedAt descending
+const sortedArticles = allArticles.sort((a, b) => {
+  return new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime();
+});
+
+const featuredArticle = sortedArticles[0];
+const remainingArticles = sortedArticles.slice(1);
+
+const breadcrumbs = [
+  { name: 'Artikel', href: '/artikel/' }
+];
+---
+
+<PageLayout
+  title="Artikel & Tips Rental Mobil Matic BSD | Sewa Mobil Matic"
+  description="Kumpulan artikel, tips perawatan mobil matic, panduan sewa bulanan, dan informasi seputar otomotif di area BSD City, Tangsel, & Jakarta."
+  h1="Artikel & Panduan Rental Mobil"
+  intro="Dapatkan wawasan seputar tips memilih kendaraan, keunggulan sewa mobil bulanan matic, dan panduan mobilitas hemat di Jabodetabek."
+  breadcrumbs={breadcrumbs}
+>
+  <div class="space-y-12 max-w-6xl mx-auto">
+    
+    <!-- Featured Article Banner -->
+    {featuredArticle && (
+      <div class="group bg-slate-900 rounded-3xl border border-slate-800 hover:border-blue-500/50 transition-all duration-300 overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-6 shadow-2xl">
+        <div class="lg:col-span-7 aspect-[16/10] bg-slate-950 overflow-hidden relative">
+          <img
+            src={featuredArticle.data.featuredImage}
+            alt={featuredArticle.data.title}
+            width="800"
+            height="500"
+            loading="eager"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <span class="absolute top-4 left-4 px-3 py-1 rounded-lg bg-blue-600 font-bold text-white text-xs shadow-md">
+            Artikel Utama
+          </span>
+        </div>
+
+        <div class="lg:col-span-5 p-6 lg:p-8 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <span class="text-xs text-blue-400 font-bold uppercase tracking-wider">
+              {featuredArticle.data.category}
+            </span>
+            <h2 class="text-2xl font-extrabold text-white group-hover:text-blue-400 transition-colors leading-snug">
+              <a href={`/artikel/${featuredArticle.slug}/`}>
+                {featuredArticle.data.title}
+              </a>
+            </h2>
+            <p class="text-sm text-slate-300 leading-relaxed line-clamp-3">
+              {featuredArticle.data.description}
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+            <span>Oleh {featuredArticle.data.author}</span>
+            <a
+              href={`/artikel/${featuredArticle.slug}/`}
+              class="inline-flex items-center gap-1 font-bold text-blue-400 hover:underline"
+            >
+              Baca Selengkapnya &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    )}
+
+    <!-- Remaining Articles Grid -->
+    <div class="space-y-6">
+      <h2 class="text-2xl font-extrabold text-white tracking-tight">Semua Artikel &amp; Panduan</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {remainingArticles.map((art) => (
+          <ArticleCard article={art} />
+        ))}
+      </div>
+    </div>
+
+  </div>
+</PageLayout>

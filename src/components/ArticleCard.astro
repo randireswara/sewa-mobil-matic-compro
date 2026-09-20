@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  article: CollectionEntry<'blog'>;
+}
+
+const { article } = Astro.props;
+const { title, description, publishedAt, category, featuredImage } = article.data;
+
+const formattedDate = new Date(publishedAt).toLocaleDateString('id-ID', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<article class="group bg-slate-900 rounded-2xl border border-slate-800 hover:border-blue-500/50 transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-xl">
+  <div>
+    <!-- Thumbnail -->
+    <a href={`/artikel/${article.slug}/`} class="block relative aspect-[16/9] bg-slate-950 overflow-hidden">
+      <img
+        src={featuredImage}
+        alt={title}
+        width="600"
+        height="338"
+        loading="lazy"
+        decoding="async"
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      />
+      <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-blue-600/90 text-white text-xs font-bold backdrop-blur">
+        {category}
+      </span>
+    </a>
+
+    <!-- Meta & Title -->
+    <div class="p-5 space-y-3">
+      <time datetime={new Date(publishedAt).toISOString()} class="text-xs text-slate-400 font-medium block">
+        {formattedDate}
+      </time>
+      <h3 class="font-extrabold text-lg text-white group-hover:text-blue-400 transition-colors leading-snug">
+        <a href={`/artikel/${article.slug}/`}>
+          {title}
+        </a>
+      </h3>
+      <p class="text-xs sm:text-sm text-slate-400 line-clamp-2 leading-relaxed">
+        {description}
+      </p>
+    </div>
+  </div>
+
+  <div class="p-5 pt-0">
+    <a
+      href={`/artikel/${article.slug}/`}
+      class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-400 group-hover:text-blue-300 transition-colors"
+    >
+      <span>Baca Artikel Selengkapnya</span>
+      <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+      </svg>
+    </a>
+  </div>
+</article>

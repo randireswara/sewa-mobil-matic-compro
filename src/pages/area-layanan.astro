@@ -1,0 +1,82 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+
+const breadcrumbs = [{ name: "Area Layanan", href: "/area-layanan/" }];
+
+const mainAreas = [
+  {
+    title: "Sewa Mobil BSD City",
+    desc: "Layanan antar-jemput cepat untuk kawasan BSD Green Office Park, ICE BSD, AEON Mall, Edutown, NavaPark, Vanya Park, dan sekitarnya.",
+    slug: "/sewa-mobil-bsd/",
+  },
+  {
+    title: "Sewa Mobil Alam Sutera",
+    desc: "Pengantaran unit ke Silkwood Apartment, Synergy Building, Living World, BINUS, dan kluster perumahan Alam Sutera.",
+    slug: "/sewa-mobil-alam-sutera/",
+  },
+  {
+    title: "Sewa Mobil Serpong",
+    desc: "Melayani area Gading Serpong (Summarecon & Paramount), WTC Matahari Serpong, Serpong Raya, hingga stasiun terdekat.",
+    slug: "/sewa-mobil-serpong/",
+  },
+  {
+    title: "Sewa Mobil Bintaro Jaya",
+    desc: "Pengantaran ke Bintaro Sektor 1-9, Bintaro Xchange Mall, Discovery Bintaro, CBD Bintaro, dan stasiun Jurangmangu.",
+    slug: "/sewa-mobil-bintaro/",
+  },
+  {
+    title: "Sewa Mobil Jakarta Selatan",
+    desc: "Melayani Pondok Indah, Cilandak, koridor perkantoran TB Simatupang, Kemang, Senopati, Kuningan, dan sekitarnya.",
+    slug: "/sewa-mobil-jakarta-selatan/",
+  },
+  {
+    title: "Sewa Mobil Jakarta Barat",
+    desc: "Antar-jemput unit ke Puri Indah, Kebon Jeruk, Kembangan, Tanjung Duren, Tomang, dan koridor akses Bandara Soetta.",
+    slug: "/sewa-mobil-jakarta-barat/",
+  },
+];
+---
+
+<PageLayout
+  title="Area Layanan Sewa Mobil BSD, Tangsel, Alam Sutera & Jakarta"
+  description="Wilayah jangkauan pengantaran sewa mobil matic harian dan bulanan di BSD City, Tangerang Selatan, Alam Sutera, Gading Serpong, & Jakarta."
+  h1="Area Jangkauan Layanan"
+  intro="Kami melayani pengantaran armada mobil matic bersih langsung ke rumah, apartemen, hotel, maupun kantor Anda di berbagai lokasi strategis."
+  breadcrumbs={breadcrumbs}
+>
+  <div class="space-y-12 max-w-5xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {
+        mainAreas.map((area) => (
+          <a
+            href={area.slug}
+            class="p-6 rounded-2xl bg-slate-900 border border-slate-800 hover:border-blue-500/50 transition-all duration-300 space-y-3 group shadow-xl"
+          >
+            <div class="flex items-center justify-between">
+              <h2 class="text-xl font-extrabold text-white group-hover:text-blue-400 transition-colors">
+                {area.title}
+              </h2>
+              <svg
+                class="w-5 h-5 text-blue-400 transform group-hover:translate-x-1 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </div>
+            <p class="text-sm text-slate-300 leading-relaxed">{area.desc}</p>
+            <span class="inline-block text-xs font-bold text-blue-400 group-hover:underline">
+              Buka Halaman Khusus {area.title} &rarr;
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</PageLayout>

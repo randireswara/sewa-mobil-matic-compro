@@ -1,0 +1,173 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { siteConfig } from '../config/site';
+
+const breadcrumbs = [
+  { name: 'Kontak', href: '/kontak/' }
+];
+---
+
+<PageLayout
+  title="Hubungi Kami - Sewa Mobil Matic BSD & Jabodetabek"
+  description="Hubungi tim Sewa Mobil Matic via WhatsApp atau telepon untuk konsultasi & booking sewa mobil matic harian/bulanan di BSD, Tangsel, Alam Sutera & Jakarta."
+  h1="Hubungi Sewa Mobil Matic"
+  intro="Tim customer service kami siap membantu pertanyaan dan reservasi unit sewa mobil matic Anda 24 Jam via WhatsApp."
+  breadcrumbs={breadcrumbs}
+>
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 max-w-5xl mx-auto">
+    
+    <!-- Contact Cards -->
+    <div class="lg:col-span-5 space-y-6">
+      
+      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+        <h2 class="text-xl font-extrabold text-white">Informasi Kontak Direct</h2>
+        
+        <div class="space-y-3 text-sm text-slate-300">
+          <div class="flex items-start gap-3">
+            <img
+              src="/images/whatsapp.webp"
+              alt="WhatsApp"
+              class="w-5 h-5 object-contain shrink-0 mt-0.5"
+              width="20"
+              height="20"
+            />
+            <div>
+              <span class="block text-xs font-bold text-slate-400 uppercase">WhatsApp CS:</span>
+              <a href={`https://wa.me/${siteConfig.whatsappNumber}`} target="_blank" class="font-bold text-emerald-400 hover:underline">
+                {siteConfig.phoneDisplay}
+              </a>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-blue-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <div>
+              <span class="block text-xs font-bold text-slate-400 uppercase">Email Resmi:</span>
+              <a href={`mailto:${siteConfig.email}`} class="font-semibold text-slate-200 hover:text-blue-400">
+                {siteConfig.email}
+              </a>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-blue-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            </svg>
+            <div>
+              <span class="block text-xs font-bold text-slate-400 uppercase">Alamat Operasional:</span>
+              <span>{siteConfig.address.street}, {siteConfig.address.city}, {siteConfig.address.province}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-800">
+          <WhatsAppButton
+            message="Halo Sewa Mobil Matic, saya ingin bertanya mengenai layanan sewa mobil."
+            label="Chat Fast-Response via WA"
+            class="w-full text-center"
+          />
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Quick WA Form / Direct Message Builder -->
+    <div class="lg:col-span-7 bg-slate-900 rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
+      <div>
+        <h2 class="text-xl font-extrabold text-white">Form Konsultasi &amp; Booking Cepat</h2>
+        <p class="text-xs sm:text-sm text-slate-400 mt-1">
+          Isi form sederhana di bawah ini untuk membuka percakapan WhatsApp dengan pesan otomatis terformat.
+        </p>
+      </div>
+
+      <form id="contact-form" class="space-y-4">
+        <div>
+          <label for="name" class="block text-xs font-bold text-slate-300 uppercase mb-1">Nama Lengkap</label>
+          <input
+            type="text"
+            id="name"
+            required
+            placeholder="Contoh: Budi Santoso"
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+        <div>
+          <label for="car-type" class="block text-xs font-bold text-slate-300 uppercase mb-1">Tipe Mobil / Layanan</label>
+          <select
+            id="car-type"
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-blue-500"
+          >
+            <option value="Sewa Mobil Bulanan BSD">Sewa Mobil Bulanan BSD</option>
+            <option value="Sewa Mobil Harian BSD">Sewa Mobil Harian BSD</option>
+            <option value="Honda Brio E CVT">Honda Brio E CVT</option>
+            <option value="Toyota Avanza CVT">Toyota Avanza CVT</option>
+            <option value="Mitsubishi Xpander CVT">Mitsubishi Xpander CVT</option>
+            <option value="Toyota Raize Turbo CVT">Toyota Raize Turbo CVT</option>
+            <option value="Toyota Innova Zenix CVT">Toyota Innova Zenix CVT</option>
+            <option value="Sewa Perusahaan / Corporate">Sewa Perusahaan / Corporate</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="location" class="block text-xs font-bold text-slate-300 uppercase mb-1">Lokasi Pengantaran</label>
+          <input
+            type="text"
+            id="location"
+            placeholder="Contoh: BSD City / Alam Sutera / Jaksel"
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+        <div>
+          <label for="notes" class="block text-xs font-bold text-slate-300 uppercase mb-1">Pesan / Catatan Tambahan</label>
+          <textarea
+            id="notes"
+            rows="3"
+            placeholder="Catatan mengenai tanggal sewa atau pertanyaan khusus..."
+            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full py-3.5 px-6 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-slate-950 font-extrabold text-base shadow-lg transition-all flex items-center justify-center gap-2"
+        >
+          <img
+            src="/images/whatsapp.webp"
+            alt="WhatsApp"
+            class="w-5 h-5 object-contain shrink-0"
+            width="20"
+            height="20"
+          />
+          <span>Kirim via WhatsApp</span>
+        </button>
+      </form>
+    </div>
+
+  </div>
+</PageLayout>
+
+<script is:inline define:vars={{ waNumber: siteConfig.whatsappNumber }}>
+  const form = document.getElementById('contact-form');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const carType = document.getElementById('car-type').value;
+      const location = document.getElementById('location').value;
+      const notes = document.getElementById('notes').value;
+
+      let msg = `Halo Sewa Mobil Matic, nama saya ${name}.\n`;
+      msg += `Saya berminat sewa unit: ${carType}.\n`;
+      if (location) msg += `Lokasi pengantaran: ${location}.\n`;
+      if (notes) msg += `Catatan: ${notes}`;
+
+      const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank');
+    });
+  }
+</script>

@@ -1,0 +1,345 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import VehicleCard from "../components/VehicleCard.astro";
+import FAQSection from "../components/FAQSection.astro";
+import CTASection from "../components/CTASection.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import { SEO_PAGES, type SeoPageData } from "../data/seoPages";
+import { FLEET_DATA, formatRupiah } from "../data/fleet";
+import { SEO_FAQS, MAIN_FAQS } from "../data/faqs";
+
+export async function getStaticPaths() {
+  return Object.keys(SEO_PAGES).map((slug) => ({
+    params: { slug },
+    props: { pageData: SEO_PAGES[slug] },
+  }));
+}
+
+export interface Props {
+  pageData: SeoPageData;
+}
+
+const { pageData } = Astro.props;
+
+const breadcrumbs = [
+  { name: "Layanan", href: "/layanan/" },
+  { name: pageData.targetKeyword, href: `/${pageData.slug}/` },
+];
+
+const schemaCrumbs = breadcrumbs.map((c) => ({ name: c.name, item: c.href }));
+
+// Get FAQs specific to this page or fallback to main FAQs
+const localFaqs = SEO_FAQS[pageData.slug] || MAIN_FAQS.slice(0, 4);
+const schemaFaqs = localFaqs.map((f) => ({
+  question: f.question,
+  answer: f.answer,
+}));
+
+// Fetch blog articles for related section
+const allArticles = await getCollection(
+  "blog",
+  ({ data }) => data.draft !== true,
+);
+const relatedArticles = allArticles.slice(0, 3);
+---
+
+<BaseLayout
+  title={pageData.metaTitle}
+  description={pageData.metaDescription}
+  breadcrumbs={schemaCrumbs}
+  faqs={schemaFaqs}
+>
+  <!-- 1. Breadcrumb -->
+  <Breadcrumb items={breadcrumbs} />
+
+  <!-- Hero & H1 with Realistic Jakarta Cars Background -->
+  <section
+    class="relative bg-slate-950 text-white overflow-hidden py-14 sm:py-20 border-b border-slate-800"
+  >
+    <!-- Background Jakarta Fleet Cars Image with Cinematic Dark Overlays -->
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      <img
+        src="/images/jakarta-cars-hero.jpg"
+        alt={`Sewa Mobil ${pageData.targetKeyword} Jakarta`}
+        class="w-full h-full object-cover object-[center_45%] opacity-45 sm:opacity-50 scale-105"
+        loading="eager"
+        decoding="async"
+      />
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/60 to-slate-950/90"
+      >
+      </div>
+      <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-950/70 via-slate-950/50 to-slate-950/85"
+      >
+      </div>
+      <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-600/15 via-transparent to-transparent"
+      >
+      </div>
+    </div>
+
+    <div
+      class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10 drop-shadow-md"
+    >
+      <span
+        class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-600/20 border border-blue-500/40 text-blue-300 text-xs sm:text-sm font-bold uppercase tracking-wider"
+      >
+        {pageData.targetKeyword}
+      </span>
+
+      <!-- Single H1 per page -->
+      <h1
+        class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight"
+      >
+        {pageData.h1}
+      </h1>
+
+      <!-- Short Intro -->
+      <p
+        class="text-base sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed"
+      >
+        {pageData.intro}
+      </p>
+
+      <div
+        class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4"
+      >
+        <WhatsAppButton
+          message={pageData.waMessage}
+          label="Hubungi via WhatsApp"
+          class="w-full sm:w-auto text-base sm:text-lg"
+        />
+        <a
+          href="#armada-relevan"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-base border border-slate-700 transition-colors"
+        >
+          Lihat Armada &amp; Tarif
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service Explanation -->
+  <section class="py-16 bg-slate-950 text-white border-b border-slate-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+        {pageData.serviceDetail.heading}
+      </h2>
+      <div
+        class="space-y-4 text-base sm:text-lg text-slate-300 leading-relaxed"
+      >
+        {pageData.serviceDetail.paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Table Section -->
+  <section class="py-16 bg-slate-900 text-white border-b border-slate-800">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+          Daftar Harga &amp; Paket Sewa Bulanan
+        </h2>
+        <p class="text-sm text-slate-400">
+          Estimasi tarif transparan tanpa biaya tambahan tersembunyi.
+        </p>
+      </div>
+
+      <div
+        class="bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden shadow-xl"
+      >
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm text-slate-300">
+            <thead
+              class="bg-slate-900 text-xs uppercase font-bold text-slate-400 border-b border-slate-800"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-4">Armada Mobil</th>
+                <th scope="col" class="px-6 py-4">Transmisi</th>
+                <th scope="col" class="px-6 py-4">Kapasitas</th>
+                <th scope="col" class="px-6 py-4">Tarif Harian</th>
+                <th scope="col" class="px-6 py-4 text-emerald-400"
+                  >Tarif Bulanan</th
+                >
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800">
+              {
+                FLEET_DATA.map((v) => (
+                  <tr class="hover:bg-slate-900/60 transition-colors">
+                    <td class="px-6 py-4 font-bold text-white whitespace-nowrap">
+                      {v.name}
+                    </td>
+                    <td class="px-6 py-4">{v.transmission}</td>
+                    <td class="px-6 py-4">{v.seats} Seats</td>
+                    <td class="px-6 py-4">{formatRupiah(v.dailyPrice)}</td>
+                    <td class="px-6 py-4 font-bold text-emerald-400">
+                      {formatRupiah(v.monthlyPrice)}
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Relevant Armada Cards -->
+  <section
+    id="armada-relevan"
+    class="py-16 bg-slate-950 text-white border-b border-slate-800"
+  >
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div class="text-center max-w-2xl mx-auto space-y-3">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+          Pilihan Armada Matic Relevan
+        </h2>
+        <p class="text-sm text-slate-400">
+          Mobil bertransmisi otomatis siap diantar langsung ke titik lokasi
+          Anda.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+          FLEET_DATA.slice(0, 3).map((vehicle) => (
+            <VehicleCard vehicle={vehicle} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Service Advantages -->
+  <section class="py-16 bg-slate-900 text-white border-b border-slate-800">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+          Keunggulan Layanan Kami
+        </h2>
+        <p class="text-sm text-slate-400">
+          Fasilitas terbaik yang menjamin kenyamanan aktivitas sewa kendaraan
+          Anda.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {
+          pageData.advantages.map((adv, idx) => (
+            <div class="p-6 rounded-2xl bg-slate-950 border border-slate-800 flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 font-extrabold flex items-center justify-center shrink-0">
+                0{idx + 1}
+              </div>
+              <div class="space-y-1">
+                <h3 class="text-lg font-bold text-white">{adv.title}</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">{adv.desc}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Coverage Areas -->
+  <section class="py-16 bg-slate-950 text-white border-b border-slate-800">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+          {pageData.coverageTitle}
+        </h2>
+        <p class="text-sm text-slate-400">
+          Layanan antar-jemput armada mencakup titik-titik lokasi strategis
+          berikut.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {
+          pageData.coverageAreas.map((area) => (
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-3">
+              <svg
+                class="w-5 h-5 text-blue-400 shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                />
+              </svg>
+              <span class="text-sm font-semibold text-slate-200">{area}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <FAQSection faqs={localFaqs} title={`FAQ ${pageData.targetKeyword}`} />
+
+  <!-- Related SEO Pages (Internal Links) -->
+  <section class="py-14 bg-slate-900 text-white border-b border-slate-800">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <h2 class="text-2xl font-extrabold text-white text-center sm:text-left">
+        Halaman SEO &amp; Layanan Terkait
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {
+          pageData.relatedPages.map((rp) => (
+            <a
+              href={`/${rp.slug}/`}
+              class="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-blue-500/50 transition-colors text-sm font-bold text-slate-200 hover:text-blue-400 flex items-center justify-between group"
+            >
+              <span>{rp.title}</span>
+              <svg
+                class="w-4 h-4 text-blue-400 transform group-hover:translate-x-1 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Articles -->
+  {
+    relatedArticles.length > 0 && (
+      <section class="py-14 bg-slate-950 text-white border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <h2 class="text-2xl font-extrabold text-white text-center sm:text-left">
+            Artikel &amp; Panduan Terkait
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {relatedArticles.map((art) => (
+              <ArticleCard article={art} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- CTA -->
+  <CTASection waMessage={pageData.waMessage} />
+</BaseLayout>

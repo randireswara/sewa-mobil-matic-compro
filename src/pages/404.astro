@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+
+const navLinks = [
+  { name: 'Beranda', href: '/' },
+  { name: 'Layanan Rental', href: '/layanan/' },
+  { name: 'Daftar Armada', href: '/armada/' },
+  { name: 'Artikel & Panduan', href: '/artikel/' },
+  { name: 'Hubungi Kami', href: '/kontak/' },
+];
+---
+
+<BaseLayout
+  title="404 - Halaman Tidak Ditemukan | Sewa Mobil Matic"
+  description="Halaman yang Anda cari tidak ditemukan. Kembali ke beranda Sewa Mobil Matic atau hubungi kami via WhatsApp."
+  noindex={true}
+>
+  <div class="min-h-[70vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 text-center">
+    <div class="max-w-md mx-auto space-y-6">
+      
+      <div class="w-20 h-20 mx-auto rounded-3xl bg-blue-600/20 text-blue-400 font-extrabold text-3xl flex items-center justify-center border border-blue-500/30">
+        404
+      </div>
+
+      <h1 class="text-3xl font-extrabold text-white tracking-tight">
+        Halaman Tidak Ditemukan
+      </h1>
+
+      <p class="text-sm text-slate-400 leading-relaxed">
+        Maaf, halaman yang Anda tuju mungkin telah dipindahkan, diubah namanya, atau tidak lagi tersedia.
+      </p>
+
+      <div class="pt-4 flex flex-col gap-3">
+        <WhatsAppButton
+          message="Halo Sewa Mobil Matic, saya tidak menemukan halaman yang saya cari di website."
+          label="Bantuan via WhatsApp"
+          class="w-full text-center"
+        />
+        
+        <a
+          href="/"
+          class="py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-sm border border-slate-700 transition-colors"
+        >
+          Kembali ke Beranda Utama
+        </a>
+      </div>
+
+      <div class="pt-6 border-t border-slate-800">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-3">Tautan Cepat:</span>
+        <div class="flex flex-wrap items-center justify-center gap-2 text-xs">
+          {navLinks.map((link) => (
+            <a href={link.href} class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 transition-colors">
+              {link.name}
+            </a>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>

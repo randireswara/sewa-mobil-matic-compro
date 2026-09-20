@@ -1,0 +1,146 @@
+---
+import type { Vehicle } from "../data/fleet";
+import { formatRupiah } from "../data/fleet";
+import WhatsAppButton from "./WhatsAppButton.astro";
+
+export interface Props {
+  vehicle: Vehicle;
+}
+
+const { vehicle } = Astro.props;
+const waMsg = `Halo Sewa Mobil Matic, saya berminat memesan/menanyakan unit ${vehicle.name}. Bisa infokan ketersediaan jadwalnya?`;
+---
+
+<div
+  class="group bg-slate-900 rounded-2xl border border-slate-800 hover:border-blue-500/50 transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-blue-500/10"
+  data-vehicle-card
+  data-vehicle-name={vehicle.name}
+>
+  <div>
+    <!-- Image Header -->
+    <div class="relative overflow-hidden bg-slate-950 aspect-[16/10]">
+      <img
+        src={vehicle.image}
+        alt={`Sewa ${vehicle.name} Automatic - Rental Mobil Matic BSD`}
+        width="600"
+        height="400"
+        loading="lazy"
+        decoding="async"
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      />
+      <div class="absolute top-3 left-3 flex flex-wrap gap-2">
+        <span
+          class="px-2.5 py-1 rounded-lg bg-blue-600/90 text-white text-xs font-bold backdrop-blur"
+        >
+          {vehicle.transmission}
+        </span>
+        <span
+          class="px-2.5 py-1 rounded-lg bg-slate-900/90 text-slate-200 text-xs font-semibold backdrop-blur border border-slate-700"
+        >
+          {vehicle.category}
+        </span>
+      </div>
+
+      {
+        vehicle.isPopular && (
+          <span class="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-amber-500 text-slate-950 text-xs font-extrabold shadow-md">
+            Paling Laris
+          </span>
+        )
+      }
+    </div>
+
+    <!-- Vehicle Specs Body -->
+    <div class="p-5 space-y-4">
+      <div class="flex items-start justify-between gap-2">
+        <div>
+          <h3
+            class="font-extrabold text-lg text-white group-hover:text-blue-400 transition-colors"
+          >
+            {vehicle.name}
+          </h3>
+          <p class="text-xs text-slate-400 mt-0.5">
+            {vehicle.engine} • {vehicle.fuelType}
+          </p>
+        </div>
+        <div
+          class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-semibold"
+        >
+          <svg
+            class="w-4 h-4 text-blue-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+            ></path>
+          </svg>
+          <span>{vehicle.seats} Seats</span>
+        </div>
+      </div>
+
+      <!-- Pricing Box -->
+      <div
+        class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80 grid grid-cols-2 gap-2 text-center"
+      >
+        <div class="border-r border-slate-800 pr-2">
+          <span
+            class="block text-[11px] font-medium text-slate-400 uppercase tracking-wider"
+            >Harian</span
+          >
+          <span class="block text-sm font-bold text-white mt-0.5"
+            >{formatRupiah(vehicle.dailyPrice)}</span
+          >
+          <span class="text-[10px] text-slate-500">/24 Jam</span>
+        </div>
+        <div class="pl-2">
+          <span
+            class="block text-[11px] font-medium text-blue-400 uppercase tracking-wider"
+            >Bulanan (Hemat)</span
+          >
+          <span class="block text-sm font-bold text-emerald-400 mt-0.5"
+            >{formatRupiah(vehicle.monthlyPrice)}</span
+          >
+          <span class="text-[10px] text-slate-500">/Bulan</span>
+        </div>
+      </div>
+
+      <!-- Features Checklist -->
+      <ul class="space-y-1.5 text-xs text-slate-300">
+        {
+          vehicle.features.slice(0, 3).map((feat) => (
+            <li class="flex items-center gap-2">
+              <svg
+                class="w-4 h-4 text-emerald-400 shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <span class="truncate">{feat}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <!-- Action Button -->
+  <div class="p-5 pt-0">
+    <WhatsAppButton
+      message={waMsg}
+      label="Sewa Unit Ini"
+      class="w-full text-center"
+    />
+  </div>
+</div>
