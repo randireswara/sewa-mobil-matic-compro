@@ -1,0 +1,328 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import {
+  DAILY_RENTAL_DATA,
+  WEEKLY_RENTAL_DATA,
+  MONTHLY_RENTAL_DATA,
+  TERMS_AND_CONDITIONS,
+} from "../data/rentalPricing";
+import { siteConfig } from "../config/site";
+
+const pricingRows = DAILY_RENTAL_DATA.map((item, idx) => ({
+  vehicle: item.vehicle,
+  category: item.category || "Mobil Matic",
+  daily: item.price,
+  weekly: WEEKLY_RENTAL_DATA[idx]?.price || "Hubungi Admin",
+  monthly: MONTHLY_RENTAL_DATA[idx]?.price || "Hubungi Admin",
+  note: item.note,
+}));
+
+const breadcrumbs = [
+  { name: "Harga", href: "/harga/" },
+  { name: "Harga Sewa Mobil BSD", href: "/harga-sewa-mobil-bsd/" },
+];
+
+const faqs = [
+  {
+    question: "Berapa harga sewa mobil termurah di BSD City?",
+    answer:
+      "Tarif sewa mobil harian di BSD City termurah mulai dari Rp 400.000 per 24 jam untuk unit Toyota Agya A/T dan Grand Avanza Facelift. Untuk sewa bulanan mulai dari Rp 5.500.000 per bulan.",
+  },
+  {
+    question: "Bagaimana perhitungan sewa harian 24 jam di sewamobilmatic.id?",
+    answer:
+      "Perhitungan sewa 24 Jam Perhari/Pertanggal terhitung mulai pukul 00.00 sampai jam 24.00 WIB sesuai tanggal pemesanan.",
+  },
+  {
+    question: "Apa saja syarat untuk sewa mobil lepas kunci di BSD?",
+    answer:
+      "Persyaratan sewa lepas kunci pribadi cukup mengisi formulir sewa dan mengirimkan foto dokumen KTP, KK, dan SIM A aktif via WhatsApp ke Admin.",
+  },
+  {
+    question: "Kapan pembayaran dan deposit sewa mobil dibayarkan?",
+    answer:
+      "Pembayaran sewa dan deposit ditransfer saat serah terima kendaraan beserta pengecekan kondisi fisik checklist (COD).",
+  },
+  {
+    question: "Apakah melayani pengantaran unit langsung ke BSD City?",
+    answer:
+      "Ya, kami melayani pengantaran langsung ke seluruh kluster perumahan, perkantoran (BSD Green Office Park), ICE BSD, AEON Mall, dan apartemen di kawasan BSD City.",
+  },
+];
+---
+
+<PageLayout
+  title="Daftar Harga Sewa Mobil BSD City - Harian, Mingguan & Bulanan | sewamobilmatic.id"
+  description="Daftar harga sewa mobil BSD City terbaru. Pricelist harian, mingguan, dan bulanan armada matic (Brio, Avanza, Raize, Zenix, Alphard) mulai Rp 400.000. Free antar BSD."
+  h1="Harga Sewa Mobil BSD City"
+  intro="Daftar lengkap harga sewa mobil matic di BSD City (Bumi Serpong Damai) untuk durasi Harian, Mingguan, dan Bulanan. Unit prima, higienis, transmisi full otomatis, dengan sistem pembayaran COD saat serah terima."
+  breadcrumbs={breadcrumbs}
+  faqs={faqs}
+>
+  <div class="max-w-6xl mx-auto space-y-12">
+    
+    <!-- Highlights Badges -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 shadow-lg">
+        <span class="block text-2xl font-black text-blue-400">22+</span>
+        <span class="text-xs text-slate-400 mt-1 block font-medium">Pilihan Armada</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 shadow-lg">
+        <span class="block text-2xl font-black text-emerald-400">Rp 400rb</span>
+        <span class="text-xs text-slate-400 mt-1 block font-medium">Mulai / 24 Jam</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 shadow-lg">
+        <span class="block text-2xl font-black text-blue-400">100%</span>
+        <span class="text-xs text-slate-400 mt-1 block font-medium">Matic / CVT Terawat</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 shadow-lg">
+        <span class="block text-2xl font-black text-emerald-400">COD</span>
+        <span class="text-xs text-slate-400 mt-1 block font-medium">Serah Terima Unit</span>
+      </div>
+    </div>
+
+    <!-- Quick Search Input for Vehicles -->
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+      <div class="flex items-center gap-2.5 text-slate-300 text-sm">
+        <svg class="w-5 h-5 text-blue-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <span class="font-semibold text-white">Cari Tipe Mobil:</span>
+      </div>
+      <div class="w-full sm:w-72 relative">
+        <input
+          type="text"
+          id="pricing-search-input"
+          placeholder="Ketik Avanza, Brio, Zenix..."
+          class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 placeholder-slate-500 transition-all"
+        />
+      </div>
+    </div>
+
+    <!-- Master Price Table (Harian, Mingguan, Bulanan) -->
+    <div class="rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl overflow-hidden">
+      <!-- Table Header Bar -->
+      <div class="p-6 bg-slate-950 border-b border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold text-blue-400 uppercase tracking-wider block">Pricelist Resmi</span>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-white">Tabel Harga Sewa Mobil BSD City</h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">
+            Perbandingan tarif sewa durasi Harian (24 Jam), Mingguan (7 Hari), dan Bulanan (30 Hari)
+          </p>
+        </div>
+        <span class="px-3.5 py-1.5 rounded-full bg-blue-500/10 text-blue-400 text-xs font-bold border border-blue-500/30 shrink-0">
+          Update Tarif 2026
+        </span>
+      </div>
+
+      <!-- Responsive Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm text-slate-300" id="pricing-table">
+          <thead class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 text-xs uppercase font-extrabold text-slate-300 border-b border-slate-800">
+            <tr>
+              <th scope="col" class="px-6 py-4 tracking-wider">Jenis Kendaraan</th>
+              <th scope="col" class="px-5 py-4 tracking-wider text-center sm:text-left">Harian</th>
+              <th scope="col" class="px-5 py-4 tracking-wider text-center sm:text-left">Mingguan</th>
+              <th scope="col" class="px-5 py-4 tracking-wider text-center sm:text-left text-emerald-400">Bulanan</th>
+              <th scope="col" class="px-6 py-4 tracking-wider text-right">Pesan Unit</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800" id="pricing-table-body">
+            {pricingRows.map((row) => {
+              const waText = `Halo sewamobilmatic.id, saya ingin booking/tanya harga untuk mobil *${row.vehicle}* di BSD. Bisa infokan ketersediaannya?`;
+              return (
+                <tr class="hover:bg-slate-800/60 transition-colors pricing-row" data-car-name={row.vehicle.toLowerCase()}>
+                  <th scope="row" class="px-6 py-4 font-bold text-white whitespace-nowrap">
+                    <div class="flex flex-col">
+                      <span class="text-base text-white">{row.vehicle}</span>
+                      <span class="text-xs font-normal text-slate-400">{row.category}</span>
+                    </div>
+                  </th>
+                  <td class="px-5 py-4 whitespace-nowrap">
+                    <span class={`font-semibold ${row.daily === "Hubungi Admin" ? "text-amber-400" : "text-white"}`}>
+                      {row.daily}
+                    </span>
+                    {row.daily !== "Hubungi Admin" && (
+                      <span class="block text-[10px] text-slate-500">/ 24 Jam</span>
+                    )}
+                  </td>
+                  <td class="px-5 py-4 whitespace-nowrap">
+                    <span class={`font-semibold ${row.weekly === "Hubungi Admin" ? "text-amber-400" : "text-slate-200"}`}>
+                      {row.weekly}
+                    </span>
+                    {row.weekly !== "Hubungi Admin" && (
+                      <span class="block text-[10px] text-slate-500">/ 7 Hari</span>
+                    )}
+                  </td>
+                  <td class="px-5 py-4 whitespace-nowrap">
+                    <span class={`font-bold ${row.monthly === "Hubungi Admin" ? "text-amber-400" : "text-emerald-400"}`}>
+                      {row.monthly}
+                    </span>
+                    {row.monthly !== "Hubungi Admin" && (
+                      <span class="block text-[10px] text-emerald-500/70">/ Bulan (Hemat)</span>
+                    )}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-right">
+                    <WhatsAppButton
+                      message={waText}
+                      label="Sewa"
+                      class="py-1.5 px-3 text-xs inline-flex"
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- No match search row -->
+      <div id="no-pricing-match" class="hidden p-8 text-center text-slate-400 text-sm">
+        Mobil dengan nama tersebut tidak ditemukan. Silakan hubungi CS kami via WhatsApp.
+      </div>
+    </div>
+
+    <!-- Note / Syarat dan Ketentuan Box (Exact from Image) -->
+    <div class="rounded-3xl bg-slate-900 border border-blue-500/30 p-6 sm:p-8 shadow-2xl space-y-5">
+      <div class="flex items-center gap-3 border-b border-slate-800 pb-4">
+        <div class="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center shrink-0">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-xl font-extrabold text-white">Note (Syarat &amp; Ketentuan):</h3>
+          <p class="text-xs text-slate-400">Harap diperhatikan sebelum melakukan reservasi kendaraan</p>
+        </div>
+      </div>
+
+      <ul class="space-y-3.5 text-sm text-slate-300">
+        {TERMS_AND_CONDITIONS.map((term, index) => (
+          <li class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-950/60 border border-slate-800/80">
+            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold shrink-0 mt-0.5">
+              •
+            </span>
+            <span class="leading-relaxed">{term}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Keunggulan Rental di BSD City -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+        <div class="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center mb-3">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+        <h3 class="text-base font-bold text-white">Antar Jemput Area BSD</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Unit dapat diantar langsung ke BSD Green Office Park, AEON Mall, The Breeze, ICE BSD, stasiun KRL, maupun kluster perumahan Anda.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+        <div class="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center mb-3">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+        <h3 class="text-base font-bold text-white">Armada Bersih &amp; Terawat</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Seluruh unit rutin servis di bengkel resmi pabrikan, mesin prima, AC dingin merata, dan wangi higienis sebelum diserahkan.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+        <div class="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center mb-3">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-base font-bold text-white">Harga Transparan &amp; COD</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Tanpa biaya tersembunyi. Pembayaran biaya sewa dan deposit ditransfer saat serah terima kendaraan setelah Anda mengecek fisik mobil.
+        </p>
+      </div>
+    </div>
+
+    <!-- Internal Linking Navigasi Cepat -->
+    <div class="p-8 rounded-3xl bg-slate-900 border border-slate-800 space-y-6">
+      <div class="text-center max-w-xl mx-auto space-y-1">
+        <h3 class="text-lg font-bold text-white">Halaman Terkait Lainnya</h3>
+        <p class="text-xs text-slate-400">Jelajahi halaman spesifik layanan sewa mobil kami</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        <a
+          href="/sewa-mobil-bsd/"
+          class="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-blue-500/50 transition-colors text-xs font-semibold text-slate-300 hover:text-white"
+        >
+          Sewa Mobil BSD City &rarr;
+        </a>
+        <a
+          href="/sewa-mobil-harian/"
+          class="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-blue-500/50 transition-colors text-xs font-semibold text-slate-300 hover:text-white"
+        >
+          Sewa Mobil Harian &rarr;
+        </a>
+        <a
+          href="/sewa-mobil-mingguan/"
+          class="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-blue-500/50 transition-colors text-xs font-semibold text-slate-300 hover:text-white"
+        >
+          Sewa Mobil Mingguan &rarr;
+        </a>
+        <a
+          href="/sewa-mobil-bulanan/"
+          class="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-blue-500/50 transition-colors text-xs font-semibold text-slate-300 hover:text-white"
+        >
+          Sewa Mobil Bulanan &rarr;
+        </a>
+      </div>
+    </div>
+
+  </div>
+</PageLayout>
+
+<script>
+  function initPricingSearch() {
+    const input = document.getElementById("pricing-search-input") as HTMLInputElement | null;
+    const rows = document.querySelectorAll(".pricing-row");
+    const noMatch = document.getElementById("no-pricing-match");
+
+    if (!input || !rows.length) return;
+
+    input.addEventListener("input", () => {
+      const query = input.value.toLowerCase().trim();
+      let matchCount = 0;
+
+      rows.forEach((row) => {
+        const carName = row.getAttribute("data-car-name") || "";
+        if (carName.includes(query)) {
+          (row as HTMLElement).style.display = "";
+          matchCount++;
+        } else {
+          (row as HTMLElement).style.display = "none";
+        }
+      });
+
+      if (noMatch) {
+        if (matchCount === 0) {
+          noMatch.classList.remove("hidden");
+        } else {
+          noMatch.classList.add("hidden");
+        }
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initPricingSearch);
+  } else {
+    initPricingSearch();
+  }
+  document.addEventListener("astro:page-load", initPricingSearch);
+</script>
